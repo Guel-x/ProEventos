@@ -10,12 +10,13 @@ namespace ProEventos.Persistence
         public GeralPersist(ProEventosContext context)
         {
             _context = context;
-        }
 
+        }
         public void Add<T>(T entity) where T : class
         {
-            _context.Add(entity);
+            _context.AddAsync(entity);
         }
+
         public void Update<T>(T entity) where T : class
         {
             _context.Update(entity);
@@ -25,10 +26,12 @@ namespace ProEventos.Persistence
         {
             _context.Remove(entity);
         }
-        public void DeleteRanger<T>(T[] entityArray) where T : class
+
+        public void DeleteRange<T>(T[] entityArray) where T : class
         {
             _context.RemoveRange(entityArray);
         }
+
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync()) > 0;

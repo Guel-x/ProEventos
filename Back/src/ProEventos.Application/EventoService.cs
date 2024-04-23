@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ProEventos.Application.Contratos;
 using ProEventos.Domain;
@@ -22,9 +20,9 @@ namespace ProEventos.Application
             try
             {
                 _geralPersist.Add<Evento>(model);
-                if(await _geralPersist.SaveChangesAsync())
+                if (await _geralPersist.SaveChangesAsync())
                 {
-                   return await _eventoPersist.GetEventoByIdAsync(model.Id, false);
+                    return await _eventoPersist.GetEventoByIdAsync(model.Id, false);
                 }
                 return null;
             }
@@ -38,14 +36,15 @@ namespace ProEventos.Application
         {
             try
             {
-                 var evento = await _eventoPersist.GetEventoByIdAsync(eventoId, false);
-                 if(evento == null) return null;
+                var evento = await _eventoPersist.GetEventoByIdAsync(eventoId, false);
+                if (evento == null) return null;
 
                 model.Id = evento.Id;
-                 _geralPersist.Update(model);
-                 if(await _geralPersist.SaveChangesAsync())
+
+                _geralPersist.Update(model);
+                if (await _geralPersist.SaveChangesAsync())
                 {
-                   return await _eventoPersist.GetEventoByIdAsync(model.Id, false);
+                    return await _eventoPersist.GetEventoByIdAsync(model.Id, false);
                 }
                 return null;
             }
@@ -59,10 +58,10 @@ namespace ProEventos.Application
         {
             try
             {
-                 var evento = await _eventoPersist.GetEventoByIdAsync(eventoId, false);
-                 if(evento == null) throw new Exception("Evento para delete não encontrado!");
+                var evento = await _eventoPersist.GetEventoByIdAsync(eventoId, false);
+                if (evento == null) throw new Exception("Evento para delete não encontrado.");
 
-                 _geralPersist.Delete<Evento>(evento);
+                _geralPersist.Delete<Evento>(evento);
                 return await _geralPersist.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -76,7 +75,7 @@ namespace ProEventos.Application
             try
             {
                 var eventos = await _eventoPersist.GetAllEventosAsync(includePalestrantes);
-                if(eventos == null) return null;
+                if (eventos == null) return null;
 
                 return eventos;
             }
@@ -91,7 +90,7 @@ namespace ProEventos.Application
             try
             {
                 var eventos = await _eventoPersist.GetAllEventosByTemaAsync(tema, includePalestrantes);
-                if(eventos == null) return null;
+                if (eventos == null) return null;
 
                 return eventos;
             }
@@ -106,7 +105,7 @@ namespace ProEventos.Application
             try
             {
                 var eventos = await _eventoPersist.GetEventoByIdAsync(eventoId, includePalestrantes);
-                if(eventos == null) return null;
+                if (eventos == null) return null;
 
                 return eventos;
             }
@@ -115,6 +114,5 @@ namespace ProEventos.Application
                 throw new Exception(ex.Message);
             }
         }
-
     }
 }
